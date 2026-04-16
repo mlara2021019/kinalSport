@@ -6578,11 +6578,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Tareas\\IN6BV\\KinalSports\\authentication-service\\auth-service\\src\\AuthService.Persistence\\AuthService.Persistence.csproj",
+      "projectUniqueName": "C:\\Tareas\\IN6BM\\KinalSports\\authentication-service\\auth-service\\src\\AuthService.Persistence\\AuthService.Persistence.csproj",
       "projectName": "AuthService.Persistence",
-      "projectPath": "C:\\Tareas\\IN6BV\\KinalSports\\authentication-service\\auth-service\\src\\AuthService.Persistence\\AuthService.Persistence.csproj",
+      "projectPath": "C:\\Tareas\\IN6BM\\KinalSports\\authentication-service\\auth-service\\src\\AuthService.Persistence\\AuthService.Persistence.csproj",
       "packagesPath": "C:\\Users\\ersan\\.nuget\\packages\\",
-      "outputPath": "C:\\Tareas\\IN6BV\\KinalSports\\authentication-service\\auth-service\\src\\AuthService.Persistence\\obj\\",
+      "outputPath": "C:\\Tareas\\IN6BM\\KinalSports\\authentication-service\\auth-service\\src\\AuthService.Persistence\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\ersan\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -6597,11 +6597,11 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Tareas\\IN6BV\\KinalSports\\authentication-service\\auth-service\\src\\AuthService.Application\\AuthService.Application.csproj": {
-              "projectPath": "C:\\Tareas\\IN6BV\\KinalSports\\authentication-service\\auth-service\\src\\AuthService.Application\\AuthService.Application.csproj"
+            "C:\\Tareas\\IN6BM\\KinalSports\\authentication-service\\auth-service\\src\\AuthService.Application\\AuthService.Application.csproj": {
+              "projectPath": "C:\\Tareas\\IN6BM\\KinalSports\\authentication-service\\auth-service\\src\\AuthService.Application\\AuthService.Application.csproj"
             },
-            "C:\\Tareas\\IN6BV\\KinalSports\\authentication-service\\auth-service\\src\\AuthService.Domain\\AuthService.Domain.csproj": {
-              "projectPath": "C:\\Tareas\\IN6BV\\KinalSports\\authentication-service\\auth-service\\src\\AuthService.Domain\\AuthService.Domain.csproj"
+            "C:\\Tareas\\IN6BM\\KinalSports\\authentication-service\\auth-service\\src\\AuthService.Domain\\AuthService.Domain.csproj": {
+              "projectPath": "C:\\Tareas\\IN6BM\\KinalSports\\authentication-service\\auth-service\\src\\AuthService.Domain\\AuthService.Domain.csproj"
             }
           }
         }

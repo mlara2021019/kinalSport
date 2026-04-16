@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "aOAslj+AZ8d1mu0PZfxP6W/HTMTl6S4P2qGI/YnKO0LoQsoci+whmpizjUavEn92PEC5shKpU+qUyxzGEkOMzA==",
+  "dgSpecHash": "Dty84xYZsnaVMFAgUI7J44VUL3vvG1RUSVL47sU2zjTbQBH+HMkvCB72/GULunFZYC16vCP6ZKtp++fcCQFafQ==",
   "success": true,
-  "projectFilePath": "C:\\Tareas\\IN6BV\\KinalSports\\authentication-service\\auth-service\\src\\AuthService.Api\\AuthService.Api.csproj",
+  "projectFilePath": "C:\\Tareas\\IN6BM\\KinalSports\\authentication-service\\auth-service\\src\\AuthService.Api\\AuthService.Api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ersan\\.nuget\\packages\\bouncycastle.cryptography\\2.5.1\\bouncycastle.cryptography.2.5.1.nupkg.sha512",
     "C:\\Users\\ersan\\.nuget\\packages\\cloudinarydotnet\\1.27.7\\cloudinarydotnet.1.27.7.nupkg.sha512",

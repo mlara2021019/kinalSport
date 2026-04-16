@@ -16,14 +16,16 @@ export const useAuthStore = create(
                 try {
                     set({ loading: true, error: null});
                     const { data } = await loginRequest({emailOrUsername, password})
+                    console.log(data)
 
                     set({
                         user: data.userDetails,
                         token: data.token,
                         expiresAt: data.expiresAt,
                         loading: false,
-                        error: message
                     })
+
+                    return { success: true}
 
                 } catch (err) {
                     console.error("Login error:", err);

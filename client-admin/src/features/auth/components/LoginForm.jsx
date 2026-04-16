@@ -1,7 +1,10 @@
 import { useForm } from "react-hook-form"
 import { useAuthStore } from "../store/authStore";
+import { useNavigate } from "react-router-dom"
 
 export const LoginForm = ({ onForgot }) => {
+
+    const navigate = useNavigate();
 
     const { register, handleSubmit, formState: { errors } } = useForm();
 
@@ -12,7 +15,10 @@ export const LoginForm = ({ onForgot }) => {
     const onSubmit = async (data) => {
         //Mandar data al backend para validar credenciales.
         const res = await login(data)
-        console.log(data);
+        console.log(res);
+        if(res.success) {
+            navigate("/dashboard")
+        }
     }
 
     return (
@@ -71,8 +77,9 @@ export const LoginForm = ({ onForgot }) => {
                 type="submit"
                 className="w-full bg-main-blue hover:opacity-90 text-white font-medium py-2.5 px-4 rounded-lg
                             transition-colors duration-200 text-sm disabled:opacity-50"
+                disabled={loading}
             >
-                Iniciar Sesión
+                {loading ? "Iniciando..." : "Iniciar Sesión"}
             </button>
 
             <p className="text-center text-sm">

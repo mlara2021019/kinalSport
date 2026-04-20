@@ -2,20 +2,37 @@ import { useEffect, useMemo, useState } from "react"
 import { useUserManagementStore } from "../store/useUserManagmentStore.js"
 import { Spinner } from "../../../shared/components/layout/Spinner.jsx"
 import { showError, showSuccess } from "../../../shared/utils/toast.js"
+import { CreateUserModal } from "./CreateUserModal.jsx"
+import { useAuthStore } from "../../auth/store/authStore.js"
 
 const PAGE_SIZE = 8;
 
 export const Users = () => {
 
     const { users, loading, error, fetchUsers } = useUserManagementStore();
+    const registerUser = useAuthStore((state) => state.register);
 
     const [search, setSearch] = useState("");
     const [roleFilter, setFilter] = useState("ALL");
     const [page, setPage] = useState(1);
+    const [openCreateModal, setOpenCreateModal] = useState(false);
 
     useEffect(() => {
         fetchUsers();
     }, [fetchUsers])
+
+    const handleCreate = async (formData) => {
+        const res = await registerUser(formData)
+        if(res.sucess) {
+            showSuccess("Usuario creado. Se envió correo de verificación.");
+            await fetchUsers(undefined, { force: true});
+            return true;
+        }
+        showError(res.error || "No se pudo crear el usuario");
+        return false;
+    }
+
+    if(loading && users.length === 0) return <Spinner />
 
     return (
         <div className="p-4">
@@ -29,7 +46,10 @@ export const Users = () => {
                     </p>
                 </div>
 
-                <button className="bg-main-blue px-4 py-2 rounded text-white hover:opacity-90 transition">
+                <button
+                    className="bg-main-blue px-4 py-2 rounded text-white hover:opacity-90 transition"
+                    onClick={() => setOpenCreateModal(true)}
+                >
                     + Agregar Usuario
                 </button>
             </div>
@@ -85,11 +105,10 @@ export const Users = () => {
                                             @{u.username}
                                         </td>
                                         <td className="px-4 py-3">
-                                            <span className={`px-2 py-1 rounded-full text-xs font-semibold ${
-                                                u.role === "ADMIN_ROLE"
-                                                    ? "bg-blue-100 text-blue-700"
-                                                    : "bg-gray-100 text-gray-700"
-                                            }`}>
+                                            <span className={`px-2 py-1 rounded-full text-xs font-semibold ${u.role === "ADMIN_ROLE"
+                                                ? "bg-blue-100 text-blue-700"
+                                                : "bg-gray-100 text-gray-700"
+                                                }`}>
                                                 {u.role}
                                             </span>
                                         </td>
@@ -126,7 +145,14 @@ export const Users = () => {
                     </div>
                 </div>
             </div>
-
+            
+            <CreateUserModal
+                isOpen={openCreateModal}
+                onClose={() => setOpenCreateModal(false)}
+                onCreate={handleCreate}
+                loading={loading}
+                error={error}
+            />
         </div>
     );
 }

@@ -4,6 +4,7 @@ import { Spinner } from "../../../shared/components/layout/Spinner.jsx"
 import { showError, showSuccess } from "../../../shared/utils/toast.js"
 import { CreateUserModal } from "./CreateUserModal.jsx"
 import { useAuthStore } from "../../auth/store/authStore.js"
+import { UserDetailModal } from "./UserDetailModal.jsx"
 
 const PAGE_SIZE = 8;
 
@@ -16,23 +17,31 @@ export const Users = () => {
     const [roleFilter, setFilter] = useState("ALL");
     const [page, setPage] = useState(1);
     const [openCreateModal, setOpenCreateModal] = useState(false);
+    const [openDetailModal, setOpenDetailModal] = useState(false);
+    const [selectdUser, setSelectedUser] = useState(null);
 
     useEffect(() => {
         fetchUsers();
     }, [fetchUsers])
 
+    const handleOpenDetail = (user) => {
+        setSelectedUser(user)
+        setOpenDetailModal(true)
+    }
+
     const handleCreate = async (formData) => {
         const res = await registerUser(formData)
-        if(res.sucess) {
+        console.log(res)
+        if (res.success) {
             showSuccess("Usuario creado. Se envió correo de verificación.");
-            await fetchUsers(undefined, { force: true});
+            await fetchUsers(undefined, { force: true });
             return true;
         }
         showError(res.error || "No se pudo crear el usuario");
         return false;
     }
 
-    if(loading && users.length === 0) return <Spinner />
+    if (loading && users.length === 0) return <Spinner />
 
     return (
         <div className="p-4">
@@ -113,7 +122,10 @@ export const Users = () => {
                                             </span>
                                         </td>
                                         <td className="px-4 py-3 text-right">
-                                            <button className="px-3 py-1.5 rounded-lg bg-main-blue text-white text-xs font-semibold hover:opacity-90">
+                                            <button
+                                                className="px-3 py-1.5 rounded-lg bg-main-blue text-white text-xs font-semibold hover:opacity-90"
+                                                onClick={() => handleOpenDetail(u)}
+                                            >
                                                 Ver / Editar
                                             </button>
                                         </td>
@@ -145,13 +157,24 @@ export const Users = () => {
                     </div>
                 </div>
             </div>
-            
+
             <CreateUserModal
                 isOpen={openCreateModal}
                 onClose={() => setOpenCreateModal(false)}
                 onCreate={handleCreate}
                 loading={loading}
                 error={error}
+            />
+
+            <UserDetailModal
+                key={selectdUser?.id || "no-user"}
+                isOpen={openDetailModal}
+                onClose={ () => {
+                    setOpenDetailModal(false)
+                    setSelectedUser(null);
+                }}
+                user={selectdUser}
+                loading={loading}
             />
         </div>
     );

@@ -20,7 +20,7 @@ export const useAuthStore = create(
 
                     set({
                         user: data.userDetails,
-                        token: data.token,
+                        token: data.accessToken,
                         expiresAt: data.expiresAt,
                         loading: false,
                     })

@@ -3,7 +3,7 @@ version: "3.9"
 services:
     postgres:
       image: postgres:16
-      container_name: auth-service-IN6BM
+      container_name: auth-service-in6bm
       restart: always
       environment:
         POSTGRES_DB: KinalSports

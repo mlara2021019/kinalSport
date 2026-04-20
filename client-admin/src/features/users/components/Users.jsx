@@ -3,8 +3,20 @@ import { useUserManagementStore } from "../store/useUserManagmentStore.js"
 import { Spinner } from "../../../shared/components/layout/Spinner.jsx"
 import { showError, showSuccess } from "../../../shared/utils/toast.js"
 
+const PAGE_SIZE = 8;
 
 export const Users = () => {
+
+    const { users, loading, error, fetchUsers } = useUserManagementStore();
+
+    const [search, setSearch] = useState("");
+    const [roleFilter, setFilter] = useState("ALL");
+    const [page, setPage] = useState(1);
+
+    useEffect(() => {
+        fetchUsers();
+    }, [fetchUsers])
+
     return (
         <div className="p-4">
 
@@ -54,49 +66,41 @@ export const Users = () => {
 
                         {/* Body (datos de ejemplo) */}
                         <tbody>
-                            <tr className="border-t hover:bg-gray-50">
-                                <td className="px-4 py-3 font-medium text-gray-800">
-                                    Juan Pérez
-                                </td>
-                                <td className="px-4 py-3 text-gray-700">@juanp</td>
-                                <td className="px-4 py-3">
-                                    <span className="px-2 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-700">
-                                        ADMIN_ROLE
-                                    </span>
-                                </td>
-                                <td className="px-4 py-3 text-right">
-                                    <button className="px-3 py-1.5 rounded-lg bg-main-blue text-white text-xs font-semibold hover:opacity-90">
-                                        Ver / Editar
-                                    </button>
-                                </td>
-                            </tr>
-
-                            <tr className="border-t hover:bg-gray-50">
-                                <td className="px-4 py-3 font-medium text-gray-800">
-                                    María López
-                                </td>
-                                <td className="px-4 py-3 text-gray-700">@maria</td>
-                                <td className="px-4 py-3">
-                                    <span className="px-2 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-700">
-                                        USER_ROLE
-                                    </span>
-                                </td>
-                                <td className="px-4 py-3 text-right">
-                                    <button className="px-3 py-1.5 rounded-lg bg-main-blue text-white text-xs font-semibold hover:opacity-90">
-                                        Ver / Editar
-                                    </button>
-                                </td>
-                            </tr>
-
-                            {/* Estado vacío */}
-                            <tr>
-                                <td
-                                    className="px-4 py-6 text-center text-gray-500"
-                                    colSpan={4}
-                                >
-                                    No hay usuarios para mostrar.
-                                </td>
-                            </tr>
+                            {users.length === 0 ? (
+                                <tr>
+                                    <td
+                                        className="px-4 py-6 text-center text-gray-500"
+                                        colSpan={4}
+                                    >
+                                        No hay usuarios para mostrar.
+                                    </td>
+                                </tr>
+                            ) : (
+                                users.map((u) => (
+                                    <tr key={u.id} className="border-t hover:bg-gray-50">
+                                        <td className="px-4 py-3 font-medium text-gray-800">
+                                            {[u.name, u.surname].filter(Boolean).join(" ") || "-"}
+                                        </td>
+                                        <td className="px-4 py-3 text-gray-700">
+                                            @{u.username}
+                                        </td>
+                                        <td className="px-4 py-3">
+                                            <span className={`px-2 py-1 rounded-full text-xs font-semibold ${
+                                                u.role === "ADMIN_ROLE"
+                                                    ? "bg-blue-100 text-blue-700"
+                                                    : "bg-gray-100 text-gray-700"
+                                            }`}>
+                                                {u.role}
+                                            </span>
+                                        </td>
+                                        <td className="px-4 py-3 text-right">
+                                            <button className="px-3 py-1.5 rounded-lg bg-main-blue text-white text-xs font-semibold hover:opacity-90">
+                                                Ver / Editar
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))
+                            )}
                         </tbody>
                     </table>
                 </div>

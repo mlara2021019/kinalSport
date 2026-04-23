@@ -5,24 +5,43 @@ import { showError, showSuccess } from "../../../shared/utils/toast.js"
 import { CreateUserModal } from "./CreateUserModal.jsx"
 import { useAuthStore } from "../../auth/store/authStore.js"
 import { UserDetailModal } from "./UserDetailModal.jsx"
+import { updateUserRole } from "../../../shared/api/index.js"
 
 const PAGE_SIZE = 8;
 
 export const Users = () => {
 
-    const { users, loading, error, fetchUsers } = useUserManagementStore();
+    const { users, loading, error, fetchUsers, updateUserRole } = useUserManagementStore();
     const registerUser = useAuthStore((state) => state.register);
+    const currentUser = useAuthStore((state) => state.user)
 
     const [search, setSearch] = useState("");
     const [roleFilter, setFilter] = useState("ALL");
     const [page, setPage] = useState(1);
     const [openCreateModal, setOpenCreateModal] = useState(false);
     const [openDetailModal, setOpenDetailModal] = useState(false);
-    const [selectdUser, setSelectedUser] = useState(null);
+    const [selectedUser, setSelectedUser] = useState(null);
 
     useEffect(() => {
         fetchUsers();
     }, [fetchUsers])
+
+    useEffect(() => {
+        if(error){
+            showError(error);
+        }
+    }, [error])
+
+    const handleSaveRole = async (user, newRole) => {
+        const res = await updateUserRole(user.id, newRole);
+        if(res.success) {
+            showSuccess("Rol actualizado correctamente")
+            setOpenDetailModal(false);
+            setSelectedUser(null);
+        } else {
+            showError(res.error || "No se pudo actualizar el rol.")
+        }
+    }
 
     const handleOpenDetail = (user) => {
         setSelectedUser(user)
@@ -167,14 +186,16 @@ export const Users = () => {
             />
 
             <UserDetailModal
-                key={selectdUser?.id || "no-user"}
+                key={selectedUser?.id || "no-user"}
                 isOpen={openDetailModal}
                 onClose={ () => {
                     setOpenDetailModal(false)
                     setSelectedUser(null);
                 }}
-                user={selectdUser}
+                user={selectedUser}
                 loading={loading}
+                onSaveRole={handleSaveRole}
+                currentUserId={currentUser?.id}
             />
         </div>
     );

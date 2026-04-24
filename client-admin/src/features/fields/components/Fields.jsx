@@ -3,6 +3,7 @@ import { useFieldStore } from "../store/useFieldStore";
 import { Spinner } from "../../../shared/components/layout/Spinner.jsx"
 import { useEffect as useToastEffect } from "react";
 import { showError } from "../../../shared/utils/toast.js";
+import { FieldModal } from "./FieldModal.jsx";
 
 export const Fields = () => {
 
@@ -32,7 +33,12 @@ export const Fields = () => {
                     </p>
                 </div>
 
-                <button className="bg-main-blue px-4 py-2 rounded text-white hover:opacity-90 transition">
+                <button
+                    onClick={ () => {
+                        setOpenModal(true)
+                    }}
+                    className="bg-main-blue px-4 py-2 rounded text-white hover:opacity-90 transition"
+                >
                     + Agregar Campo
                 </button>
             </div>
@@ -82,8 +88,14 @@ export const Fields = () => {
                         </div>
                     </div>
                 ))}
-
             </div>
+
+            <FieldModal
+                isOpen={openModal}
+                onClose={() => {
+                    setOpenModal(false)
+                }}
+            />
         </div>
     );
 };

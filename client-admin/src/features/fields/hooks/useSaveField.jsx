@@ -2,6 +2,7 @@ import { useFieldStore } from "../store/useFieldStore";
 
 export const useSaveField = () => {
     const createField = useFieldStore((state) => state.createField);
+    const updateField = useFieldStore((state) => state.updateField);
 
     const saveField = async (data, fieldId = null) => {
         const formData = new FormData();
@@ -17,7 +18,7 @@ export const useSaveField = () => {
         }
 
         if(fieldId) {
-            //actualizar
+            await updateField(fieldId, formData)
         } else {
             await createField(formData)
         }

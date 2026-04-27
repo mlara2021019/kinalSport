@@ -1,7 +1,8 @@
 import { create } from "zustand";
 import {
     getFields as getFieldsRequest,
-    createField as createFieldRequest
+    createField as createFieldRequest,
+    updateField as updateFieldRequest,
 } from "../../../shared/api"
 
 export const useFieldStore = create((set, get) => ({
@@ -45,6 +46,28 @@ export const useFieldStore = create((set, get) => ({
             set({
                 loading: false,
                 error: error.response?.data?.message || "Error al crear campo."
+            })
+        }
+    },
+
+    updateField: async (id, data) => {
+        try {
+            set({ loading: true, error: null})
+            const response = await updateFieldRequest(id, data)
+
+            const updated = response.data.data
+
+            set({
+                fields: get().fields.map((f) =>
+                    f._id === id ? updated : f
+                ),
+                loading: false,
+            });
+
+        } catch (error) {
+            set({
+                loading: false,
+                error: error.response?.data?.message || "Error al actualizar el campo."
             })
         }
     }

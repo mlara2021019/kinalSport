@@ -9,6 +9,7 @@ export const Fields = () => {
 
     const { fields, loading, error, getFields } = useFieldStore();
     const [openModal, setOpenModal] = useState(false)
+    const [selectedField, setSelectedField] = useState(null);
 
     useEffect(() => {
         getFields();
@@ -34,8 +35,9 @@ export const Fields = () => {
                 </div>
 
                 <button
-                    onClick={ () => {
+                    onClick={() => {
                         setOpenModal(true)
+                        setSelectedField(null)
                     }}
                     className="bg-main-blue px-4 py-2 rounded text-white hover:opacity-90 transition"
                 >
@@ -77,7 +79,13 @@ export const Fields = () => {
                             </p>
 
                             <div className="flex gap-3 mt-5">
-                                <button className="flex-1 py-2 rounded-lg bg-main-blue text-white font-medium hover:opacity-90 transition">
+                                <button
+                                    className="flex-1 py-2 rounded-lg bg-main-blue text-white font-medium hover:opacity-90 transition"
+                                    onClick={() => {
+                                        setSelectedField(field)
+                                        setOpenModal(true)
+                                    }}
+                                >
                                     ✏️ Editar
                                 </button>
 
@@ -94,7 +102,9 @@ export const Fields = () => {
                 isOpen={openModal}
                 onClose={() => {
                     setOpenModal(false)
+                    setSelectedField(null)
                 }}
+                field={selectedField}
             />
         </div>
     );

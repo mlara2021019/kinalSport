@@ -15,3 +15,7 @@ export const updateField = async (id, data) => {
         headers: { "Content-Type": "multipart/form-data"}
     })
 }
+
+export const deleteField = async (id) => {
+    return await axiosAdmin.put(`/fields/${id}/desactivate`)
+}

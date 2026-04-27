@@ -3,6 +3,7 @@ import {
     getFields as getFieldsRequest,
     createField as createFieldRequest,
     updateField as updateFieldRequest,
+    deleteField as deleteFieldRequest
 } from "../../../shared/api"
 
 export const useFieldStore = create((set, get) => ({
@@ -68,6 +69,25 @@ export const useFieldStore = create((set, get) => ({
             set({
                 loading: false,
                 error: error.response?.data?.message || "Error al actualizar el campo."
+            })
+        }
+    },
+
+    deleteField: async (id) => {
+        try {
+            set({loading: true, error: null})
+
+            await deleteFieldRequest(id);
+
+            set({
+                fields: get().fields.filter(f => f._id !== id),
+                loading: false
+            })
+
+        } catch (error) {
+            set({
+                loading: false,
+                error: error.response?.data?.message || "Error al eliminar campo."
             })
         }
     }

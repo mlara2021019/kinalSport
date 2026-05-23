@@ -8,6 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = AuthService.Application
-build_property.ProjectDir = C:\Tareas\IN6BM\KinalSports\authentication-service\auth-service\src\AuthService.Application\
+build_property.ProjectDir = C:\KinalSportsIN6BM\authentication-service\auth-service\src\AuthService.Application\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
